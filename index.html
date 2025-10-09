@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramsheed Medappil - Full Stack Developer</title>
+    <style>
+        /* Basic CSS - you'd expand this significantly */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: #f8fafc;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .hero h2 {
+            font-size: 1.5rem;
+            color: #2563eb;
+            margin-bottom: 2rem;
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="container">
+        <div style="padding: 1rem 0;">
+            <strong>Ramsheed Medappil</strong>
+            <div style="float: right;">
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero container">
+        <div style="width: 100%;">
+            <h1>Ramsheed Medappil</h1>
+            <h2>Senior Full-Stack Developer</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                I architect and build scalable web applications that drive business efficiency and digital transformation
+            </p>
+            <div>
+                <a href="#projects" style="background: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; margin: 0 0.5rem;">
+                    View My Projects
+                </a>
+                <a href="#contact" style="border: 2px solid #2563eb; color: #2563eb; padding: 12px 24px; border-radius: 6px; text-decoration: none; margin: 0 0.5rem;">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="container">
+        <h2 style="text-align: center; font-size: 2.5rem; margin: 4rem 0 2rem 0;">Featured Projects</h2>
+        
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <h3>Winscart - E-commerce Platform</h3>
+                <p>Full-stack e-commerce platform with secure payments, inventory management, and automated deployment.</p>
+                <div style="margin: 1rem 0;">
+                    <span style="background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-size: 0.875rem; margin-right: 0.5rem;">Laravel</span>
+                    <span style="background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-size: 0.875rem; margin-right: 0.5rem;">Vue.js</span>
+                    <span style="background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 20px; font-size: 0.875rem; margin-right: 0.5rem;">MySQL</span>
+                </div>
+                <div>
+                    <a href="https://winscart.com" target="_blank" style="color: #2563eb; text-decoration: none; margin-right: 1rem;">Live Demo</a>
+                    <a href="https://github.com/ramsheedm/winscart" target="_blank" style="color: #2563eb; text-decoration: none;">Source Code</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
