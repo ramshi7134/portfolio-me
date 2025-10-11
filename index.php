@@ -165,27 +165,35 @@
     </section>
 
     <section id="contact">
-      <h2>Contact</h2>
-      <div class="card" style="display:grid;grid-template-columns:1fr 320px;gap:14px">
-        <div>
-          <form id="contactForm">
-            <label>Name</label>
-            <input id="name" name="name" type="text" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
-            <label>Email</label>
-            <input id="email" name="email" type="email" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
-            <label>Message</label>
-            <textarea id="message" name="message" rows="5" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
-            <div style="margin-top:10px"><button class="btn" type="submit">Send message</button></div>
-          </form>
+  <h2>Contact</h2>
+  <div class="card" style="display:grid;grid-template-columns:1fr 320px;gap:14px">
+    <div>
+      <form id="contactForm">
+        <label>Name</label>
+        <input id="name" name="name" type="text" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+        <label>Email</label>
+        <input id="email" name="email" type="email" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+        <label>Message</label>
+        <textarea id="message" name="message" rows="5" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
+        
+        <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn" type="submit" style="flex:1;">Send message</button>
+          <a href="assets/Ramsheed-Medappil-CV.pdf" download class="btn" style="background:linear-gradient(90deg,#1d4ed8,#60a5fa);color:#fff;">Download CV</a>
         </div>
-        <aside style="padding:12px;background:rgba(255,255,255,0.01);border-radius:8px">
-          <div style="font-weight:700">Get in touch</div>
-          <div style="color:var(--muted);font-size:13px;margin-top:8px">Email: <a href="mailto:me@ramsheed.com">me@ramsheed.com</a></div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">Phone: +971 50 820 0747</div>
-          <div style="color:var(--muted);font-size:13px;margin-top:6px">Location: Dubai, UAE</div>
-        </aside>
-      </div>
-    </section>
+      </form>
+
+      <!-- Toast alert -->
+      <div id="toast" style="display:none;margin-top:15px;padding:12px 16px;border-radius:8px;text-align:center;font-weight:500;"></div>
+    </div>
+
+    <aside style="padding:12px;background:rgba(255,255,255,0.01);border-radius:8px">
+      <div style="font-weight:700">Get in touch</div>
+      <div style="color:var(--muted);font-size:13px;margin-top:8px">Email: <a href="mailto:me@ramsheed.com">me@ramsheed.com</a></div>
+      <div style="color:var(--muted);font-size:13px;margin-top:6px">Phone: +971 50 820 0747</div>
+      <div style="color:var(--muted);font-size:13px;margin-top:6px">Location: Dubai, UAE</div>
+    </aside>
+  </div>
+</section>
   </main>
 
   <footer>
@@ -193,26 +201,45 @@
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-    function sendForm(e){
-      e.preventDefault();
-      const form = document.getElementById('contactForm');
-      const formData = new FormData(form);
+const toast = document.getElementById('toast');
+const contactForm = document.getElementById('contactForm');
 
-      fetch('send_email.php', {
-          method: 'POST',
-          body: formData
-      })
-      .then(res => res.json())
-      .then(data => {
-          alert(data.message);
-          if(data.status === 'success') form.reset();
-      })
-      .catch(() => alert('Error sending message.'));
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(contactForm);
+
+  showToast('Sending message...', '#2563eb');
+
+  try {
+    const res = await fetch('send_email.php', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      showToast('✅ ' + data.message, '#16a34a');
+      contactForm.reset();
+    } else {
+      showToast('❌ ' + data.message, '#dc2626');
     }
+  } catch {
+    showToast('⚠️ Error connecting to server.', '#dc2626');
+  }
+});
 
-    document.getElementById('contactForm').addEventListener('submit', sendForm);
-  </script>
+function showToast(message, color) {
+  toast.textContent = message;
+  toast.style.display = 'block';
+  toast.style.background = color;
+  toast.style.color = '#fff';
+  toast.style.opacity = '1';
+  toast.style.transition = 'opacity 0.4s ease';
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.style.display = 'none', 400);
+  }, 4000);
+}
+</script>
 </body>
 </html>
