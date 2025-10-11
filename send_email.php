@@ -4,7 +4,11 @@ header('Content-Type: application/json');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // Path to Composer autoload
+require 'vendor/autoload.php';
+
+// Load .env variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST'){
     http_response_code(405);
@@ -24,18 +28,19 @@ if(empty($name) || empty($email) || empty($message)){
 
 $mail = new PHPMailer(true);
 try {
-    // SMTP configuration
+    // SMTP configuration from .env
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';       // Your SMTP server
-    $mail->SMTPAuth = true;
-    $mail->Username = 'noreplay.mailsend@gmail.com';   // SMTP username
-    $mail->Password = 'bgqa tshw dezo tfac';// SMTP password or app password
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
+    $mail->Host       = $_ENV['SMTP_HOST'];
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $_ENV['SMTP_USER'];
+    $mail->Password   = $_ENV['SMTP_PASS'];
+    $mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+    $mail->Port       = $_ENV['SMTP_PORT'];
+    $mail->Timeout    = 30; // Increase timeout
 
     // Email headers
-    $mail->setFrom('your@gmail.com', 'Ramsheed Portfolio');
-    $mail->addAddress('me@ramsheed.com'); // Your email
+    $mail->setFrom($_ENV['SMTP_USER'], 'Ramsheed Portfolio');
+    $mail->addAddress($_ENV['SMTP_TO']);
     $mail->addReplyTo($email, $name);
 
     $mail->Subject = "New message from $name";
