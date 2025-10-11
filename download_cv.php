@@ -1,5 +1,5 @@
 <?php
-$file = __DIR__ . 'Ramsheed-Medappil-CV.pdf';
+$file = __DIR__ . '/Ramsheed-Medappil-CV.pdf';
 
 if(file_exists($file)){
     header('Content-Description: File Transfer');
