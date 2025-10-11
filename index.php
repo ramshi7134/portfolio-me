@@ -32,7 +32,6 @@
     .job{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02)}
     footer{max-width:1100px;margin:20px auto;padding:20px;text-align:center;color:var(--muted)}
     .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,#0ea5a0,#6ee7b7);color:#022; font-weight:600}
-    /* responsive */
     @media (max-width:880px){.hero{grid-template-columns:1fr;}.logo{width:64px;height:64px}.contact{order:2}}
   </style>
 </head>
@@ -151,7 +150,6 @@
           <div style="color:var(--muted);font-size:13px;margin-top:8px">Generates ready-to-use Laravel packages with migrations, models, controllers, routes and CI setups.</div>
           <div class="project-links" style="margin-top:12px">
             <a href="https://packito.ramsheed.com" target="_blank">Live</a>
-            <a href="#" onclick="openDemo('packito')">Demo</a>
           </div>
         </div>
 
@@ -160,7 +158,6 @@
           <div style="color:var(--muted);font-size:13px;margin-top:8px">Scalable multi-vendor e-commerce with payments, responsive UI and automated CI/CD.</div>
           <div style="margin-top:12px" class="project-links">
             <a href="https://winscart.com" target="_blank">Live</a>
-            <a href="#" onclick="openDemo('winscart')">Case study</a>
           </div>
         </div>
 
@@ -171,13 +168,13 @@
       <h2>Contact</h2>
       <div class="card" style="display:grid;grid-template-columns:1fr 320px;gap:14px">
         <div>
-          <form id="contactForm" onsubmit="sendForm(event)">
-            <label style="display:block;margin-bottom:8px;color:var(--muted)">Name</label>
-            <input id="name" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
-            <label style="display:block;margin:8px 0 8px;color:var(--muted)">Email</label>
-            <input id="email" type="email" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
-            <label style="display:block;margin:8px 0 8px;color:var(--muted)">Message</label>
-            <textarea id="message" rows="5" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
+          <form id="contactForm">
+            <label>Name</label>
+            <input id="name" name="name" type="text" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+            <label>Email</label>
+            <input id="email" name="email" type="email" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+            <label>Message</label>
+            <textarea id="message" name="message" rows="5" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
             <div style="margin-top:10px"><button class="btn" type="submit">Send message</button></div>
           </form>
         </div>
@@ -186,42 +183,36 @@
           <div style="color:var(--muted);font-size:13px;margin-top:8px">Email: <a href="mailto:me@ramsheed.com">me@ramsheed.com</a></div>
           <div style="color:var(--muted);font-size:13px;margin-top:6px">Phone: +971 50 820 0747</div>
           <div style="color:var(--muted);font-size:13px;margin-top:6px">Location: Dubai, UAE</div>
-          <div style="margin-top:12px"><a href="#" onclick="downloadCV()" class="chip">Download CV (PDF)</a></div>
         </aside>
       </div>
     </section>
   </main>
 
   <footer>
-    <div style="max-width:900px;margin:0 auto;color:var(--muted)">© <span id="year"></span> Ramsheed Medappil — Senior Full Stack Developer. Built with HTML & vanilla JS.</div>
+    <div style="max-width:900px;margin:0 auto;color:var(--muted)">© <span id="year"></span> Ramsheed Medappil — Senior Full Stack Developer. Built with HTML, PHP & PHPMailer.</div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
     function sendForm(e){
       e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-      // Simple client-side simulation. Hook this to your backend endpoint when ready.
-      alert('Thanks ' + name + '! Your message was prepared to send.\nEmail: ' + email);
-      document.getElementById('contactForm').reset();
+      const form = document.getElementById('contactForm');
+      const formData = new FormData(form);
+
+      fetch('send_email.php', {
+          method: 'POST',
+          body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+          alert(data.message);
+          if(data.status === 'success') form.reset();
+      })
+      .catch(() => alert('Error sending message.'));
     }
 
-    function downloadCV(){
-      const cvText = `RAMSHEED MEDAPPIL\nSenior Full Stack Developer\nEmail: me@ramsheed.com\nPhone: +971508200747\n\n(Downloadable CV placeholder - replace with your real PDF file link.)`;
-      const blob = new Blob([cvText], {type: 'text/plain'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'Ramsheed-Medappil-CV.txt';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function openDemo(id){
-      if(id === 'packito') window.open('https://packito.ramsheed.com','_blank');
-      if(id === 'winscart') window.open('https://winscart.com','_blank');
-    }
+    document.getElementById('contactForm').addEventListener('submit', sendForm);
   </script>
 </body>
 </html>
