@@ -28,8 +28,8 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';       // Your SMTP server
     $mail->SMTPAuth = true;
-    $mail->Username = 'your@gmail.com';   // SMTP username
-    $mail->Password = 'your-app-password';// SMTP password or app password
+    $mail->Username = 'noreplay.mailsend@gmail.com';   // SMTP username
+    $mail->Password = 'bgqa tshw dezo tfac';// SMTP password or app password
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
