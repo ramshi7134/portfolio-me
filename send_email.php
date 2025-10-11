@@ -39,7 +39,7 @@ try {
     $mail->Timeout    = 30; // Increase timeout
 
     // Email headers
-    $mail->setFrom($_ENV['SMTP_USER'], 'Ramsheed Portfolio');
+    $mail->setFrom($_ENV['SMTP_FROM'], 'Ramsheed Portfolio');
     $mail->addAddress($_ENV['SMTP_TO']);
     $mail->addReplyTo($email, $name);
 
