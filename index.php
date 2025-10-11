@@ -178,7 +178,7 @@
         
         <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn" type="submit" style="flex:1;">Send message</button>
-          <a href="assets/Ramsheed-Medappil-CV.pdf" download class="btn" style="background:linear-gradient(90deg,#1d4ed8,#60a5fa);color:#fff;">Download CV</a>
+          <a href="Ramsheed-Medappil-CV.pdf" download class="btn" style="background:linear-gradient(90deg,#1d4ed8,#60a5fa);color:#fff;">Download CV</a>
         </div>
       </form>
 
