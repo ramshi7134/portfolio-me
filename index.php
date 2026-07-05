@@ -562,15 +562,12 @@
       color: #fff;
     }
 
-    #toast {
-      display: none;
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: 500;
-      font-size: 14px;
+    .btn-whatsapp {
+      background: linear-gradient(90deg, #128c7e, #25d366);
+      color: #fff;
     }
+
+    .btn-whatsapp:hover { color: #fff; }
 
     /* Footer */
     footer {
@@ -652,6 +649,7 @@
 
       <div class="hero-actions">
         <a class="btn btn-primary" href="#projects">View my work</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/971508200747" target="_blank" rel="noopener">WhatsApp me</a>
         <a class="btn btn-secondary" href="download_cv.php">Download CV</a>
         <a class="btn btn-secondary" href="https://www.linkedin.com/in/ramsheed-medappil-4a9384170/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
@@ -703,8 +701,8 @@
           </div>
           <div class="contact-item">
             <div>
-              <strong>Phone</strong>
-              +971 50 820 0747
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/971508200747" target="_blank" rel="noopener">+971 50 820 0747</a>
             </div>
           </div>
           <div class="contact-item">
@@ -714,6 +712,7 @@
             </div>
           </div>
           <div class="social-links">
+            <a href="https://wa.me/971508200747" target="_blank" rel="noopener">WhatsApp</a>
             <a href="https://www.linkedin.com/in/ramsheed-medappil-4a9384170/" target="_blank" rel="noopener">LinkedIn</a>
             <a href="download_cv.php">CV</a>
           </div>
@@ -932,11 +931,10 @@
               <textarea id="message" name="message" rows="5" required></textarea>
             </div>
             <div class="form-actions">
-              <button class="btn btn-primary" type="submit">Send message</button>
+              <button class="btn btn-whatsapp" type="submit">Send via WhatsApp</button>
               <a class="btn btn-download" href="download_cv.php">Download CV</a>
             </div>
           </form>
-          <div id="toast"></div>
         </div>
 
         <aside class="contact-card">
@@ -949,8 +947,8 @@
           </div>
           <div class="contact-item">
             <div>
-              <strong>Phone</strong>
-              +971 50 820 0747
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/971508200747" target="_blank" rel="noopener">+971 50 820 0747</a>
             </div>
           </div>
           <div class="contact-item">
@@ -960,6 +958,7 @@
             </div>
           </div>
           <div class="social-links">
+            <a href="https://wa.me/971508200747" target="_blank" rel="noopener">WhatsApp</a>
             <a href="https://www.linkedin.com/in/ramsheed-medappil-4a9384170/" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </aside>
@@ -985,42 +984,28 @@
       link.addEventListener('click', () => navLinks.classList.remove('open'));
     });
 
-    const toast = document.getElementById('toast');
+    const WHATSAPP_NUMBER = '971508200747';
     const contactForm = document.getElementById('contactForm');
 
-    contactForm.addEventListener('submit', async (e) => {
+    contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const formData = new FormData(contactForm);
-      showToast('Sending message...', '#2563eb');
 
-      try {
-        const res = await fetch('send_email.php', { method: 'POST', body: formData });
-        const data = await res.json();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
 
-        if (data.status === 'success') {
-          showToast('Message sent successfully!', '#16a34a');
-          contactForm.reset();
-        } else {
-          showToast(data.message, '#dc2626');
-        }
-      } catch {
-        showToast('Error connecting to server.', '#dc2626');
-      }
+      const text = [
+        'Hello Ramsheed,',
+        '',
+        `My name is ${name}.`,
+        `Email: ${email}`,
+        '',
+        message
+      ].join('\n');
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank', 'noopener');
     });
-
-    function showToast(message, color) {
-      toast.textContent = message;
-      toast.style.display = 'block';
-      toast.style.background = color;
-      toast.style.color = '#fff';
-      toast.style.opacity = '1';
-      toast.style.transition = 'opacity 0.4s ease';
-
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.style.display = 'none', 400);
-      }, 4000);
-    }
   </script>
 </body>
 </html>
